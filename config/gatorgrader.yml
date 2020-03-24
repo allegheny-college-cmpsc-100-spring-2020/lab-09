@@ -1,0 +1,42 @@
+---
+name: lab-09
+break: true
+indent: 4
+---
+
+src/main/java/labnine:
+    ScoreTest.java:
+        ConfirmFileExists
+        MatchFileFragment --fragment "TODO" --count 0 --exact
+        MatchFileFragment --fragment "{Your Name Here}" --count 0 --exact
+        MatchFileFragment --fragment ".nextLine()" --count 4
+        MatchFileFragment --fragment "new WizardTest" --count 1 --exact
+        MatchFileFragment --fragment ".grade()" --count 1 --exact
+
+src/main/java/labnine:
+    WizardTest.java:
+        ConfirmFileExists       
+        MatchFileFragment --fragment "TODO" --count 0 --exact
+        MatchFileFragment --fragment "{Your Name Here}" --count 0 --exact
+        MatchFileFragment --fragment "switch (score)" --count 1 --exact
+        MatchFileFragment --fragment "case" --count 3
+        MatchFileFragment --fragment "default" --count 1
+        MatchFileFragment --fragment "if (" --count 2
+
+writing:
+    reflection.md:
+        ConfirmFileExists
+        mdl --rules ~MD009,~MD012,~MD014,~MD013,~MD022,~MD026,~MD031
+        CountFileWords --count 300
+        CountFileParagraphs --count 6
+        MatchFileFragment --fragment "TODO" --count 0 --exact
+        CountMarkdownTags --tag "code_block" --count 1
+        MatchFileFragment --fragment "{Your Name Here}" --count 0 --exact
+        
+CountCommits --count 3
+ExecuteCommand --command "gradle build"
+ExecuteCommand --command "gradle -q --console plain run"
+CountCommandOutput --command "gradle -q --console plain run" --count 5
+MatchCommandFragment --fragment "PASSED" --command "gradle -q --console plain run" --count 1 --exact
+MatchCommandFragment --fragment "BA" --command "gradle -q --console plain run" --count 2 --exact
+MatchCommandFragment --fragment "AA" --command "gradle -q --console plain run" --count 1 --exact
